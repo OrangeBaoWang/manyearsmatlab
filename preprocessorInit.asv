@@ -1,0 +1,103 @@
+function myPreprocessor=preprocessorInit(myParameters,myMicrophones)
+	myPreprocessor.PP_FRAMESIZE=myParameters.GLOBAL_FRAMESIZE;
+	microphonesClone(myMicrophones,myPreprocessor.myMicrophones);
+	myPreprocessor.window=zeros(myPreprocessor.PP_FRAMESIZE,1); 
+	generatePowerComplementaryWindow(myPreprocessor.window,myPreprocessor.PP_FRAMESIZE);
+
+    for indexMic=1:myPreprocessor.myMicrophones.nMics
+        micstInit(myPreprocessor.micArray(indexMic), myParameters,...
+                  microphonesGetPosition(myPreprocessor.myMicrophones,indexMic),...
+                  microphonesGetGain(myPreprocessor.myMicrophones,indexMic));
+    end
+
+end
+
+
+
+function generatePowerComplementaryWindow(windows,len)
+	windows=zeros(len,1);
+    for k=0:len-1
+        tmp = 4.0* k/ len;
+        invert = 0;
+        if (tmp < 1.0)
+        elseif (tmp < 2.0)
+          tmp = 2.0 - tmp;
+          invert = 1;
+        elseif (tmp < 3.0)
+          tmp = tmp - 2.0;
+          invert = 1;
+        else
+          tmp = 4.0 - tmp;
+      	end
+
+        tmp = tmp*1.9979;
+
+        window(k+1) = (0.5 - 0.5 * cos(tmp)) * (0.5 - 0.5 * cos(tmp));
+
+        if (invert == 1)
+          window(k+1) = 1.0 - window(k+1);
+        end
+        window(k+1) = sqrtf(window(k+1));
+    end
+end
+
+
+/*******************************************************************************
+ * microphonesClone                                                            *
+ * --------------------------------------------------------------------------- *
+ *                                                                             *
+ * Inputs:      myMicrophonesSource The source microphones object              *
+ *                                                                             *
+ * Outputs:     myMicrophonesDest   The destination microphones object         *
+ *                                                                             *
+ * Description: This function clones the source microphones object in the      *
+ *              destination microphones object.                                *
+ *                                                                             *
+ ******************************************************************************/
+ microphonesClone(myMicrophonesSource , myMicrophonesDest)
+    myMicrophonesDest.nMics = myMicrophonesSource.nMics;
+    myMicrophonesDest.nPairs = myMicrophonesSource.nPairs;
+
+
+
+    // +-----------------------------------------------------------------------+
+    // | Step A: Microphone positions                                          |
+    // +-----------------------------------------------------------------------+
+
+    myMicrophonesDest.micsPosition = myMicrophonesSource.micsPosition;
+
+    for indexMic1=1:myMicrophonesDest.nMics %(indexMic1 = 0; indexMic1 < myMicrophonesDest.nMics; indexMic1++)
+        myMicrophonesDest.micsPosition(indexMic1)(3) = myMicrophonesSource.micsPosition(indexMic1)(3);
+        myMicrophonesDest.micsPosition(indexMic1)(1) = myMicrophonesSource.micsPosition(indexMic1)(1);
+        myMicrophonesDest.micsPosition(indexMic1)(2) = myMicrophonesSource.micsPosition(indexMic1)(2);
+    end
+
+    // +-----------------------------------------------------------------------+
+    // | Step B: Microphone gains                                              |
+    // +-----------------------------------------------------------------------+
+
+    myMicrophonesDest.micsGain = myMicrophonesSource.micsGain;
+
+    for indexMic1=1:myMicrophonesDest.nMics
+        myMicrophonesDest.micsGain(indexMic1) = myMicrophonesSource.micsGain(indexMic1);
+    end
+
+    // +-----------------------------------------------------------------------+
+    // | Step C: Forward matrix                                                |
+    // +-----------------------------------------------------------------------+
+
+    myMicrophonesDest.mappingMatrix = myMicrophonesSource.mappingMatrix;
+
+    // +-----------------------------------------------------------------------+
+    // | Step C: Inverse matrix                                                |
+    // +-----------------------------------------------------------------------+
+
+    myMicrophonesDest.inverseMappingMatrix = myMicrophonesSource.inverseMappingMatrix;
+
+    for (indexPair = 0; indexPair < myMicrophonesDest.nPairs; indexPair++)
+    {
+        myMicrophonesDest.inverseMappingMatrix(indexPair)(0) = myMicrophonesSource.inverseMappingMatrix(indexPair)(0);
+        myMicrophonesDest.inverseMappingMatrix(indexPair)(1) = myMicrophonesSource.inverseMappingMatrix(indexPair)(1);
+    }
+
+}
