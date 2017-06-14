@@ -47,15 +47,11 @@ function myMicST=micstProcessFrame(myMicST)
 %      **************************************************************************/
 
 %    // lambda_rev_n,i(k) = gamma * lambda_rev_n-1,i(k) + (1 - gamma) * delta * | zeta_n-1_i(k) * X_n-1_i(k) |^2
-    k=1;
-    myMicST.lambda(k) = myMicST.MICST_GAMMA * myMicST.lambda_prev(k) + (1.0 - myMicST.MICST_GAMMA) * myMicST.MICST_DELTA * abs(myMicST.zeta_prev(k)) * abs(myMicST.zeta_prev(k)) * myMicST.xpower_prev(k);
-    
-%     k=MICST_FRAMESIZE;
-%     myMicST.lambda(k) = myMicST.MICST_GAMMA * myMicST.lambda_prev(k) + (1.0 - myMicST.MICST_GAMMA) * myMicST.MICST_DELTA * abs(myMicST.zeta_prev(k)) * abs(myMicST.zeta_prev(k)) * myMicST.xpower_prev(k);  
-    
-    for k=2:myMicST.MICST_HALFFRAMESIZE
+
+    for k=1:myMicST.MICST_HALFFRAMESIZE
         myMicST.lambda(k) = myMicST.MICST_GAMMA * myMicST.lambda_prev(k) + (1.0 - myMicST.MICST_GAMMA) * myMicST.MICST_DELTA * abs(myMicST.zeta_prev(k)) * abs(myMicST.zeta_prev(k)) * myMicST.xpower_prev(k);
         myMicST.lambda(myMicST.MICST_FRAMESIZE - k+1) = myMicST.lambda(k);
+
     end
 
 %        /***************************************************************************
@@ -65,21 +61,13 @@ function myMicST=micstProcessFrame(myMicST)
 %    // post[k] = | X_n_i[k] |^2 - sigma_2_i[k] - lambda_rev_n,i[k]
 %    // ksi_n_i[k] = {(1 - alphaD) * [ zeta_n-1_i[k] ]^2 * | X_n-1_i[k] |^2 + alphaD * post[k]} / (sigma_2_i[k] + lambda_rev_n,i[k] + 1E-20)
 
-    k=1;
-    post = myMicST.xpower(k) - myMicST.sigma(k) - myMicST.lambda(k);
+
+    post = myMicST.xpower() - myMicST.sigma(1) - myMicST.lambda(1);
     post=max(post,0);
     myMicST.ksi(k) = ((1 - myMicST.MICST_ALPHAD) * myMicST.zeta_prev(k) * ...
         myMicST.zeta_prev(k) * myMicST.xpower_prev(k) + myMicST.MICST_ALPHAD * post) ...
         / (myMicST.sigma(k) + myMicST.lambda(k) + eps);
-    
-%     k=myMicST.MICST_ALPHAD;
-%     post = myMicST.xpower(k) - myMicST.sigma(k) - myMicST.lambda(k);
-%     post=max(post,0);
-%     myMicST.ksi(k) = ((1 - myMicST.MICST_ALPHAD) * myMicST.zeta_prev(k) * ...
-%         myMicST.zeta_prev(k) * myMicST.xpower_prev(k) + myMicST.MICST_ALPHAD * post) ...
-%         / (myMicST.sigma(k) + myMicST.lambda(k) + eps);
-    
-	for k=2:myMicST.MICST_HALFFRAMESIZE
+	for k=2:myMicST.MICST_HALFFRAMESIZE-1
 		post = myMicST.xpower(k) - myMicST.sigma(k) - myMicST.lambda(k);
 		post=max(post,0);
 		myMicST.ksi(k) = ((1 - myMicST.MICST_ALPHAD) * myMicST.zeta_prev(k) * ...
@@ -124,9 +112,9 @@ function [myMCRA,sigma]=mcraProcessFrame(myMCRA, xPower,sigma)
 %      **************************************************************************/
 %     // Apply equation S = alphaS * S_previous + (1 - alphaS) * Sf
 %     //odd or even
-    myMCRA.S(1) = myMCRA.MCRA_ALPHAS * myMCRA.S_prev(1) + (1.0 - myMCRA.MCRA_ALPHAS) * myMCRA.Sf(1);
-    %myMCRA.S(myMCRA.MICST_FRAMESIZE)= myMCRA.MCRA_ALPHAS * myMCRA.S_prev(myMCRA.MICST_FRAMESIZE) + (1.0 - myMCRA.MCRA_ALPHAS) * myMCRA.Sf(A.MICST_FRAMESIZE);
-    for k=2:myMCRA.MICST_HALFFRAMESIZE
+   % myMCRA.S(1) = myMCRA.MCRA_ALPHAS * myMCRA.S_prev(1) + (1.0 - myMCRA.MCRA_ALPHAS) * myMCRA.Sf(1);
+   % myMCRA.S(myMCRA.MICST_HALFFRAMESIZE)= myMCRA.MCRA_ALPHAS * myMCRA.S_prev(myMCRA.MICST_HALFFRAMESIZE) + (1.0 - myMCRA.MCRA_ALPHAS) * myMCRA.S(A.MICST_HALFFRAMESIZE);
+    for k=1:myMCRA.MICST_HALFFRAMESIZE
     	myMCRA.S(k) = myMCRA.MCRA_ALPHAS * myMCRA.S_prev(k) + (1.0 - myMCRA.MCRA_ALPHAS) * myMCRA.Sf(k);
     	myMCRA.S(myMCRA.MICST_FRAMESIZE - k+1) = myMCRA.S(k);%//this equation have sense?yes,half;
     end

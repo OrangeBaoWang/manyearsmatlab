@@ -1,3 +1,4 @@
+clear all;
 SAMPLES_PER_FRAME=512;
 NB_MICROPHONES=8;
 RAW_BUFFER_SIZE=SAMPLES_PER_FRAME*NB_MICROPHONES;
@@ -14,7 +15,7 @@ for frameNumber=1:nFrame-1
 	fprintf('frameNumber,%d \n',frameNumber);
 	for channel=1:NB_MICROPHONES
 		audio_float_data(channel,:)=audio_raw_data(channel+NB_MICROPHONES*...
-            (1:SAMPLES_PER_FRAME)+(frameNumber-1)*NB_MICROPHONES*SAMPLES_PER_FRAME)/32768;
+            (0:SAMPLES_PER_FRAME-1)+(frameNumber-1)*NB_MICROPHONES*SAMPLES_PER_FRAME)/32768;
         myPreprocessor=preprocessorPushFrames(myPreprocessor, SAMPLES_PER_FRAME, channel);
         myPreprocessor=preprocessorAddFrame(myPreprocessor,audio_float_data(channel,:),...
         channel, SAMPLES_PER_FRAME);
@@ -97,7 +98,7 @@ function myMicrophones=setup_microphone_positions_and_gains(myMicrophones,parame
 	end
 end
 function myPreprocessor=preprocessorPushFrames(myPreprocessor, shiftSize, micIndex)
-  myPreprocessor.micArray(micIndex).xtime(1:myPreprocessor.PP_FRAMESIZE - shiftSize)=myPreprocessor.micArray(micIndex).xtime(shiftSize:myPreprocessor.PP_FRAMESIZE-1);
+  myPreprocessor.micArray(micIndex).xtime(1:myPreprocessor.PP_FRAMESIZE - shiftSize)=myPreprocessor.micArray(micIndex).xtime(shiftSize+1:myPreprocessor.PP_FRAMESIZE);
 end
 function myPreprocessor=preprocessorAddFrame(myPreprocessor,newFrame,micIndex, sizeFrame)
      gain=myPreprocessor.myMicrophones.micsGain(micIndex);

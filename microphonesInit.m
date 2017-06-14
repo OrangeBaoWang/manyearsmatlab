@@ -1,6 +1,4 @@
 
-
-
 function myMicrophones=micphonesInit(nMics)
 	%nMIcs=6;
 	myMicrophones.nMics=nMics;

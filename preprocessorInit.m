@@ -34,12 +34,12 @@ function windows=generatePowerComplementaryWindow(len)
 
         tmp = tmp*1.9979;
 
-        window(k+1) = (0.5 - 0.5 * cos(tmp)) * (0.5 - 0.5 * cos(tmp));
+        windows(k+1) = (0.5 - 0.5 * cos(tmp)) * (0.5 - 0.5 * cos(tmp));
 
         if (invert == 1)
-          window(k+1) = 1.0 - window(k+1);
+          windows(k+1) = 1.0 - windows(k+1);
         end
-        window(k+1) = sqrt(window(k+1));
+        windows(k+1) = sqrt(windows(k+1));
     end
 end
 % function microphonesClone(myMicrophonesSource , myMicrophonesDest)
