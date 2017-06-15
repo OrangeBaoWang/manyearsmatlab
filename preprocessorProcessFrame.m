@@ -72,12 +72,12 @@ function myMicST=micstProcessFrame(myMicST)
         myMicST.zeta_prev(k) * myMicST.xpower_prev(k) + myMicST.MICST_ALPHAD * post) ...
         / (myMicST.sigma(k) + myMicST.lambda(k) + eps);
     
-%     k=myMicST.MICST_ALPHAD;
-%     post = myMicST.xpower(k) - myMicST.sigma(k) - myMicST.lambda(k);
-%     post=max(post,0);
-%     myMicST.ksi(k) = ((1 - myMicST.MICST_ALPHAD) * myMicST.zeta_prev(k) * ...
-%         myMicST.zeta_prev(k) * myMicST.xpower_prev(k) + myMicST.MICST_ALPHAD * post) ...
-%         / (myMicST.sigma(k) + myMicST.lambda(k) + eps);
+    k=myMicST.MICST_FRAMESIZE;
+    post = myMicST.xpower(k) - myMicST.sigma(k) - myMicST.lambda(k);
+    post=max(post,0);
+    myMicST.ksi(k) = ((1 - myMicST.MICST_ALPHAD) * myMicST.zeta_prev(k) * ...
+        myMicST.zeta_prev(k) * myMicST.xpower_prev(k) + myMicST.MICST_ALPHAD * post) ...
+        / (myMicST.sigma(k) + myMicST.lambda(k) + eps);
     
 	for k=2:myMicST.MICST_HALFFRAMESIZE
 		post = myMicST.xpower(k) - myMicST.sigma(k) - myMicST.lambda(k);
@@ -101,8 +101,8 @@ function myMicST=micstProcessFrame(myMicST)
 %     **************************************************************************/
 
 %   // zeta_i[k] * X_i[k] / | X_i[k] |
-	myMicST.weightedResultReal=myMicST.zeta.*myMicST.xfreqReal./(sqrt(myMicST.xpower));
-	myMicST.weightedResultImag=myMicST.zeta.*myMicST.xfreqImag./(sqrt(myMicST.xpower));
+	myMicST.weightedResultReal=myMicST.zeta.*myMicST.xfreqReal./(sqrt(myMicST.xpower)+eps);
+	myMicST.weightedResultImag=myMicST.zeta.*myMicST.xfreqImag./(sqrt(myMicST.xpower)+eps);
 
 end
 
