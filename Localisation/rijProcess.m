@@ -12,7 +12,7 @@ function myRij=rijProcess(myRij)
 			myRij.freqReal(indexMic(2),k)+myRij.freqImag(indexMic(1),k)*myRij.freqImag(...
 				indexMic(2),k));
 
-			myRij.workingArrayImag(k) = myRij.RIJ_FRAMESIZE*(myRij.freqReal(indexMic(1),k)*...
+			myRij.workingArrayImag(k) = -myRij.RIJ_FRAMESIZE*(myRij.freqReal(indexMic(1),k)*...
 			myRij.freqImag(indexMic(2),k)-myRij.freqImag(indexMic(1),k)*myRij.freqReal(...
 				indexMic(2),k));
 		end
@@ -22,7 +22,7 @@ function myRij=rijProcess(myRij)
 
     end
 
-`
+
 %     /***************************************************************************
 %     * Step 2: Filter the cross-correlation terms     find the max point             *
 %     ***************************************************************************/
