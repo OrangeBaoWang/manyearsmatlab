@@ -36,7 +36,7 @@ function  myDelays= delayInit(myMicrophones, mySphere, c, Fs, radius)
     distanceArray = zeros(myDelays.nMics);
 
     for indexPoint=1:myDelays.nPoints
-        pointXYZ = myDelays.DELAYS_RADIUS * myDelays.mySphere.spherePoints;
+        pointXYZ = myDelays.DELAYS_RADIUS * myDelays.mySphere.spherePoints(indexPoint,:);
         for indexMic1=1:myDelays.nMics
             micXYZ=myDelays.myMicrophones.micsPosition(indexMic1,:);
 
@@ -57,6 +57,7 @@ function  myDelays= delayInit(myMicrophones, mySphere, c, Fs, radius)
                     .C)*diffDist+0.5);
             end
         end
+    end
 
     
 end

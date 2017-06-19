@@ -34,7 +34,7 @@ function myRij=rijProcess(myRij)
     			indexDelayCorrected=indexDelayCorrected+myRij.RIJ_FRAMESIZE;
     		end
     		maxn=myRij.crossCorr(indexPair,indexDelayCorrected);
-    		for indexDelay2=indexDelay-myRij.RIJ_FILTERRANGE:indexDelay+...
+    		for indexDelay2=indexPair-myRij.RIJ_FILTERRANGE:indexPair+...
     			myRij.RIJ_FILTERRANGE
     			indexDelayCorrected=indexDelay2;
     			if (indexDelayCorrected<=0)
@@ -48,4 +48,5 @@ function myRij=rijProcess(myRij)
             indexCrossFiltered=indexCrossFiltered+1;
     	end
     end
+    
 end
