@@ -121,32 +121,30 @@ function myParameters=ParametersLoadDefault()
     parametersStruct.P_MCRA_DELTA = 0.01;
 
 
+% 
+% // +-----------------------------------------------------------------------+
+% // | B. Beamformer                                                         |
+% // +-----------------------------------------------------------------------+
+% 
+% 
+% // +---------------------------------------------------------------+
+% // | I. Potential sources                                          |
+% // +---------------------------------------------------------------+
 
-// +-----------------------------------------------------------------------+
-// | B. Beamformer                                                         |
-// +-----------------------------------------------------------------------+
+%     // Define the maximum number of sources that can be found
 
+parametersStruct.P_BF_MAXSOURCES = 4;
 
-// +---------------------------------------------------------------+
-// | I. Potential sources                                          |
-// +---------------------------------------------------------------+
-
-    // Define the maximum number of sources that can be found
-    parametersStruct.P_BF_MAXSOURCES = 4;
-
-    // Define the range where the neighbour delays are used to refine
-    // the result
+%     // Define the range where the neighbour delays are used to refine
+%     // the result
     parametersStruct.P_BF_FILTERRANGE = 5;
-
-    // Define the number of delays next to the main delay to set to zero
-    // to find the peaks after the first one
+% 
+%     // Define the number of delays next to the main delay to set to zero
+%     // to find the peaks after the first one
     parametersStruct.P_BF_RESETRANGE = 5;
 
-    // Define the energy level
+%     // Define the energy level
     parametersStruct.P_BF_ET = 600.0;
-
-
-
 
     myParameters=parametersStruct;
 end
