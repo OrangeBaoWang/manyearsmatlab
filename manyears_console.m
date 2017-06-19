@@ -30,8 +30,6 @@ for frameNumber=1:nFrame-1
 %     //#3 Find potential sources from the beamformer
     myBeamformer=beamformerFindMaxima(myBeamformer, myPreprocessor);%, myPotentialSources);
 
-
-
 end
 
 function myMicrophones=setup_microphone_positions_and_gains(myMicrophones,parametersStruct)
