@@ -17,7 +17,16 @@ function myRij=rijProcess(myRij)
 				indexMic(2),k));
 		end
 
-		myRij.workingArray=myRij.workingArrayReal+myRij.workingArrayImag*1i;
+
+        myRij.workingArrayReal = myRij.RIJ_FRAMESIZE*(myRij.freqReal(indexMic(1),:).*...
+        myRij.freqReal(indexMic(2),:)+myRij.freqImag(indexMic(1),:).*myRij.freqImag(...
+        indexMic(2),:));
+
+        myRij.workingArrayImag = -myRij.RIJ_FRAMESIZE*(myRij.freqReal(indexMic(1),:).*...
+        myRij.freqImag(indexMic(2),:)-myRij.freqImag(indexMic(1),:).*myRij.freqReal(...
+        indexMic(2),:));
+    
+    	myRij.workingArray=myRij.workingArrayReal+myRij.workingArrayImag*1i;
 		myRij.crossCorr(indexPair,:)=real(ifft(myRij.workingArray));
 
     end

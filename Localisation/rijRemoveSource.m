@@ -30,7 +30,7 @@ function  [myRij]=rijRemoveSource(myRij,myDelays,indexPoint)
 %         // +-------------------------------------------------------------------+
 
         for delay = delayMin:delayMax        
-            myRij.crossCorrFiltered(indexPair,delay - myRij.delayMin) = 0.0;
+            myRij.crossCorrFiltered(indexPair,delay - myRij.delayMin+1) = 0.0;
         end
 
 end

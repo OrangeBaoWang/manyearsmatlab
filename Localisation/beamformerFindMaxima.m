@@ -53,10 +53,11 @@ function myBeamformer = beamformerFindMaxima ( myBeamformer , myPreprocessor )
 %         // First verify that this was not the last iteration so that delays
 %         // are reset only if needed
 
-        if (~(indexPotential == myBeamformer.BF_MAXSOURCES - 1))
+        if (~(indexPotential == myBeamformer.BF_MAXSOURCES ))
 %             // Reset
             myBeamformer.myRij=rijRemoveSource(myBeamformer.myRij, myBeamformer.myDelays, maxIndex);
         end
+    end
 
 
 
@@ -82,7 +83,7 @@ function myBeamformer = beamformerFindMaxima ( myBeamformer , myPreprocessor )
 %         mySources.sourcesPosition[indexPotential][1] = y;
 %         mySources.sourcesPosition[indexPotential][2] = z;
 
-        mySources.sourcesPosition(indexPotential,:) = myBeamformer.mySphere(indexPoint,:);
+        mySources.sourcesPosition(indexPotential,:) = myBeamformer.mySphere.spherePoints(indexPoint,:);
 
 %         // +-------------------------------------------------------------------+
 %         // | Step B: Get probability                                           |
