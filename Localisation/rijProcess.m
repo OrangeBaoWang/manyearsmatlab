@@ -21,10 +21,12 @@ function myRij=rijProcess(myRij)
         myRij.workingArrayReal = myRij.RIJ_FRAMESIZE*(myRij.freqReal(indexMic(1),:).*...
         myRij.freqReal(indexMic(2),:)+myRij.freqImag(indexMic(1),:).*myRij.freqImag(...
         indexMic(2),:));
-
+%         myRij.workingArrayReal=single(myRij.workingArrayReal);
+         
         myRij.workingArrayImag = -myRij.RIJ_FRAMESIZE*(myRij.freqReal(indexMic(1),:).*...
         myRij.freqImag(indexMic(2),:)-myRij.freqImag(indexMic(1),:).*myRij.freqReal(...
         indexMic(2),:));
+%         myRij.workingArrayImag=single(myRij.workingArrayImag);
     
     	myRij.workingArray=myRij.workingArrayReal+myRij.workingArrayImag*1i;
 		myRij.crossCorr(indexPair,:)=real(ifft(myRij.workingArray));
