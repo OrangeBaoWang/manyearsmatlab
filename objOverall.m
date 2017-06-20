@@ -1,3 +1,0 @@
-function tmp=createEmptyOverallContext()
-
-end

@@ -30,7 +30,16 @@ function myRij=rijProcess(myRij)
     
     	myRij.workingArray=myRij.workingArrayReal+myRij.workingArrayImag*1i;
 		myRij.crossCorr(indexPair,:)=real(ifft(myRij.workingArray));
-
+        fprintf('workingArrayReal: ');
+        myRij.workingArrayReal
+        fprintf('\n');
+        fprintf('workingArrayImag:');
+        myRij.workingArrayImag
+        fprintf('\n');
+        fprintf('real(ifft(myRij.workingArray):');
+        real(ifft(myRij.workingArray))
+        fprintf('\n');
+        clc;
     end
 
 
