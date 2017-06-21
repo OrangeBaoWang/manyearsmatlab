@@ -2,6 +2,7 @@ clear all;
 
 addpath('./Preprocessing');
 addpath('./Localisation');
+addpath('./tracking');
 SAMPLES_PER_FRAME=512;
 NB_MICROPHONES=8;
 RAW_BUFFER_SIZE=SAMPLES_PER_FRAME*NB_MICROPHONES;
@@ -10,6 +11,7 @@ myMicrophones=microphonesInit(NB_MICROPHONES);
 myMicrophones=setup_microphone_positions_and_gains(myMicrophones,myParameters);
 myPreprocessor=preprocessorInit(myParameters,myMicrophones);
 myBeamformer = beamformerInit(myParameters,myMicrophones);
+myMixture=mixtureInit(myParameters);
 audio_float_data=zeros(NB_MICROPHONES,SAMPLES_PER_FRAME);
 fileId = fopen('rawdata_2srcs_90_90.raw','r');
 audio_raw_data = fread(fileId,inf,'int16');

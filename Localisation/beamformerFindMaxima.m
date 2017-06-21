@@ -1,5 +1,4 @@
-function myBeamformer = beamformerFindMaxima ( myBeamformer , myPreprocessor )
-
+function [myBeamformer,mySources] = beamformerFindMaxima (myBeamformer, myPreprocessor,mySources )
     % 	/***************************************************************************
     %     * Step 1: Rij object                                                       *
     %     ***************************************************************************/
