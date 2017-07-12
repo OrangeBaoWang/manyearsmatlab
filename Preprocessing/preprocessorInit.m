@@ -8,7 +8,6 @@ function myPreprocessor=preprocessorInit(myParameters,myMicrophones)
 %     myPreprocessor.workingArray1Imag = zeros(myPreprocessor.PP_FRAMESIZE,1);%(float*) newTable1D(myPreprocessor.PP_FRAMESIZE, sizeof(float));
 %     myPreprocessor.workingArray2Real = zeros(myPreprocessor.PP_FRAMESIZE,1);%(float*) newTable1D(myPreprocessor.PP_FRAMESIZE, sizeof(float));
 %     myPreprocessor.workingArray2Imag = zeros(myPreprocessor.PP_FRAMESIZE,1);%(float*) newTable1D(myPreprocessor.PP_FRAMESIZE, sizeof(float));
-
     for indexMic=1:myPreprocessor.myMicrophones.nMics
         myPreprocessor.micArray(indexMic)=micstInit( myParameters,...
                   myPreprocessor.myMicrophones.micsPosition(indexMic,:),...

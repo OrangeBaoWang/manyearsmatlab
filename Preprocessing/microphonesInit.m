@@ -1,5 +1,5 @@
 
-function myMicrophones=micphonesInit(nMics)
+function myMicrophones=microphonesInit(nMics)
 	%nMIcs=6;
 	myMicrophones.nMics=nMics;
 	myMicrophones.nPairs = (myMicrophones.nMics * (myMicrophones.nMics - 1)) / 2;

@@ -44,6 +44,9 @@ function [myBeamformer,mySources] = beamformerFindMaxima (myBeamformer, myPrepro
 
         myBeamformer.maxValues(indexPotential)= maxValue;
         myBeamformer.maxIndexes(indexPotential)=maxIndex;
+        
+        myBeamformer.bestPoints(indexPotential,:) = myBeamformer.mySphere...
+            .spherePoints(maxIndex,:);
 % 
 %         // +-------------------------------------------------------------------+
 %         // | Step B: Reset the delays associated with the maximum              |

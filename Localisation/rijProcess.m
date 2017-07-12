@@ -30,16 +30,16 @@ function myRij=rijProcess(myRij)
     
     	myRij.workingArray=myRij.workingArrayReal+myRij.workingArrayImag*1i;
 		myRij.crossCorr(indexPair,:)=real(ifft(myRij.workingArray));
-        fprintf('workingArrayReal: ');
-        myRij.workingArrayReal
-        fprintf('\n');
-        fprintf('workingArrayImag:');
-        myRij.workingArrayImag
-        fprintf('\n');
-        fprintf('real(ifft(myRij.workingArray):');
-        real(ifft(myRij.workingArray))
-        fprintf('\n');
-        clc;
+%         fprintf('workingArrayReal: ');
+%         myRij.workingArrayReal
+%         fprintf('\n');
+%         fprintf('workingArrayImag:');
+%         myRij.workingArrayImag
+%         fprintf('\n');
+%         fprintf('real(ifft(myRij.workingArray):');
+%         real(ifft(myRij.workingArray))
+%         fprintf('\n');
+%         clc;
     end
 
 
@@ -52,19 +52,22 @@ function myRij=rijProcess(myRij)
     		indexDelayCorrected = indexDelay-myRij.RIJ_FILTERRANGE;
     		if indexDelayCorrected<=0
     			indexDelayCorrected=indexDelayCorrected+myRij.RIJ_FRAMESIZE;
-    		end
-    		maxn=myRij.crossCorr(indexPair,indexDelayCorrected);
-    		for indexDelay2=indexDelay-myRij.RIJ_FILTERRANGE:indexDelay+...
-    			myRij.RIJ_FILTERRANGE
-    			indexDelayCorrected=indexDelay2;
-    			if (indexDelayCorrected<=0)
-    				indexDelayCorrected=indexDelayCorrected+myRij.RIJ_FRAMESIZE;
-    			end
-    			if (myRij.crossCorr(indexPair,indexDelayCorrected)>maxn)
-    				maxn = myRij.crossCorr(indexPair, indexDelayCorrected);
-                end
             end
-            myRij.crossCorrFiltered(indexPair, indexCrossFiltered)=maxn;
+            
+%     		maxn=myRij.crossCorr(indexPair,indexDelayCorrected);
+%     		for indexDelay2=indexDelay-myRij.RIJ_FILTERRANGE:indexDelay+...
+%     			myRij.RIJ_FILTERRANGE
+%     			indexDelayCorrected=indexDelay2;
+%     			if (indexDelayCorrected<=0)
+%     				indexDelayCorrected=indexDelayCorrected+myRij.RIJ_FRAMESIZE;
+%     			end
+%     			if (myRij.crossCorr(indexPair,indexDelayCorrected)>maxn)
+%     				maxn = myRij.crossCorr(indexPair, indexDelayCorrected);
+%                 end
+%             end
+%             myRij.crossCorrFiltered(indexPair, indexCrossFiltered)=maxn;
+            myRij.crossCorrFiltered(indexPair, indexCrossFiltered) = ...
+                myRij.crossCorr(indexPair,indexDelayCorrected);
             indexCrossFiltered=indexCrossFiltered+1;
     	end
     end

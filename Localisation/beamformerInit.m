@@ -17,7 +17,7 @@ function myBeamformer=beamformerInit(myParameters,myMicrophones)
 %     // | Step A: Microphones                                                   |
 
     myBeamformer.myMicrophones=myMicrophones;
-    myBeamformer.mySphere = sphereInit(1);%( myBeamformer.BF_SPHERENBLEVELS );
+    myBeamformer.mySphere = sphereInit(myBeamformer.BF_SPHERENBLEVELS);%( myBeamformer.BF_SPHERENBLEVELS );
     myBeamformer.myDelays = delayInit(myMicrophones, myBeamformer.mySphere,...
     myParameters.GLOBAL_C, myParameters.GLOBAL_FS, 1.5);
     myBeamformer.myRij = rijInit(myBeamformer.myMicrophones,...
@@ -25,5 +25,6 @@ function myBeamformer=beamformerInit(myParameters,myMicrophones)
       myParameters.P_BF_RESETRANGE);
     myMicrophones.maxValues = zeros(myBeamformer.BF_MAXSOURCES,1);
     myMicrophones.maxIndexes = zeros (myBeamformer.BF_MAXSOURCES,1);
+    myMicrophones.bestPoints = zeros(myBeamformer.BF_MAXSOURCES,3);
     
 end
