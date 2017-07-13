@@ -62,11 +62,11 @@ function myParameters=ParametersLoadDefault()
     %     // +-----------------------------------------------------------------------+
     parametersStruct.P_GEO_MICS_MIC1_GAIN = 1.0000;
     parametersStruct.P_GEO_MICS_MIC1_X = 0.0;
-    parametersStruct.P_GEO_MICS_MIC1_Y = +0.0385;
+    parametersStruct.P_GEO_MICS_MIC1_Y = -0.0385;
     parametersStruct.P_GEO_MICS_MIC1_Z = 0.0;
     parametersStruct.P_GEO_MICS_MIC2_GAIN = 1.0000;
     parametersStruct.P_GEO_MICS_MIC2_X = 0;
-    parametersStruct.P_GEO_MICS_MIC2_Y = -0.0385;
+    parametersStruct.P_GEO_MICS_MIC2_Y = +0.0385;
     parametersStruct.P_GEO_MICS_MIC2_Z = 0;
     parametersStruct.P_GEO_MICS_MIC3_GAIN = 1.0000;
     parametersStruct.P_GEO_MICS_MIC3_X = -0.033341;

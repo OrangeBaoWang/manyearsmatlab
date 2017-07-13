@@ -14,12 +14,12 @@ myBeamformer = beamformerInit(myParameters,myMicrophones);
 % myMixture=mixtureInit(myParameters);
 audio_float_data=zeros(NB_MICROPHONES,SAMPLES_PER_FRAME);
 
-[audio,fs]=audioread('./“Ù∆µ-all_02.wav');
+[audio,fs]=audioread('./6ch_03.wav');
 [len1,len2] = size(audio);
 audio_raw_data = reshape(audio',[len1*len2,1]);
 nFrame=round(length(audio_raw_data)/(SAMPLES_PER_FRAME*NB_MICROPHONES));
 frameNumber=1;
-angle=[];
+angleSet=[];
 for frameNumber=1:nFrame-1
 	fprintf('frameNumber,%d \n',frameNumber);
 	for channel=1:NB_MICROPHONES
@@ -33,10 +33,19 @@ for frameNumber=1:nFrame-1
     myPreprocessor=preprocessorProcessFrame(myPreprocessor);
 %     //#3 Find potential sources from the beamformer
     myBeamformer=beamformerFindMaxima(myBeamformer, myPreprocessor);%, myPotentialSources);
-    myBeamformer.maxIndexes
-    myBeamformer.bestPoints(1,:)
-    angle=[angle,atan(myBeamformer.bestPoints(1,1)/...
-        myBeamformer.bestPoints(1,2))*180/pi];
+    myBeamformer.maxIndexes;
+    myBeamformer.bestPoints(1,:);
+    angle = atan(myBeamformer.bestPoints(1,2)/myBeamformer.bestPoints(1,1))*180/pi;
+    if myBeamformer.bestPoints(1,1) < 0 &&myBeamformer.bestPoints(1,2) < 0
+        angle = -angle-90;
+    end
+    if myBeamformer.bestPoints(1,1) < 0 &&myBeamformer.bestPoints(1,2) > 0
+        angle = angle+90;
+    end
+    if myBeamformer.bestPoints(1,1) > 0 &&myBeamformer.bestPoints(1,2) < 0
+        angle = -angle;
+    end
+    angleSet=[angleSet; angle];
     myBeamformer.maxValues;
 end
 
